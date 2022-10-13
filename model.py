@@ -8,6 +8,7 @@ class MLmodel:
         pass
 
     def split_data(self):
+        pass
 
 
     def create_model(self):
