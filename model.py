@@ -7,13 +7,16 @@ class MLmodel:
     def __init__(self) -> None:
         pass
 
-    def create_model():
+    def split_data(self):
+
+
+    def create_model(self):
 
         model = MultinomialNB()
 
         return model
 
-    def train(model, X_train, y_train):
+    def train(self, model, X_train, y_train):
 
         model.fit(X_train, y_train)
 

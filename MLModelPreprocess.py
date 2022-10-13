@@ -16,21 +16,21 @@ class DataPreprocess:
 
 
     def processing_text(self, texto):
-        # Paso 1: Remover con un expresión regular carateres especiales (no palabras).
+        #Remover con un expresión regular carateres especiales (no palabras).
         processed_feature = re.sub(r'\W', ' ', str(texto))
-        # Paso 2: Remover ocurrencias de caracteres individuales
+        #Remover ocurrencias de caracteres individuales
         processed_feature= re.sub(r'\s+[a-zA-Z]\s+', ' ', processed_feature)
         processed_feature = re.sub(r'\^[a-zA-Z]\s+', ' ', processed_feature) 
-        # Paso 3: Remover números (Ocurrencias muy esporádicas en nuestro dataset)
+        #Remover números (Ocurrencias muy esporádicas en nuestro dataset)
         processed_feature = re.sub(r'[0-9]+', ' ', processed_feature)
-        # Paso 4: Simplificar espacios concecutivos a un único espacio entre palabras
+        #Simplificar espacios concecutivos a un único espacio entre palabras
         processed_feature = re.sub(' +', ' ', processed_feature)
-        # Paso 5: Pasar todo el texto a minúsculas    
+        #Pasar todo el texto a minúsculas    
         processed_feature = processed_feature.lower()
-        # Paso 6: Aplicar stemming. Es una forma de enviar las palabras a una raiz común simplificando de esta manera el vocabulario. 
-        #         por ejemplo las palabras (absurdo, absurdos) que estan en el review 2895 seran llevados a la raiz común "absurd"
-        #         y de esta forma se evita tener dos palabras diferentes con el mismo significado en nuestro vocabulario.
-        processed_feature = " ".join([stemmer.stem(i) for i in processed_feature.split()])
+        #Aplicar stemming. Es una forma de enviar las palabras a una raiz común simplificando de esta manera el vocabulario. 
+        #y de esta forma se evita tener dos palabras diferentes con el mismo significado en nuestro vocabulario.
+        #Ademas de eliminar las palabras que tengan menos de dos letras
+        processed_feature = " ".join([stemmer.stem(i) for i in processed_feature.split() if len(i) >2])
         
 
         return processed_feature
@@ -43,7 +43,7 @@ class DataPreprocess:
             texto_procesado.append(procesado)
         return texto_procesado
 
-    def vectroize_data(texto_procesado):
+    def vectroize_data(self, texto_procesado):
         vectorizer = CountVectorizer(max_features=2500, stop_words=stopwords.words('english'))
         # max_features representa el tamaño del vocabulario. Vamos a permitir 2500 palabras.
         # stop_words le indicamos las palabras de parada para que las ignore en el vocabulario. 
@@ -52,6 +52,7 @@ class DataPreprocess:
         texto_features = vectorizer.fit_transform(texto_procesado).toarray()
 
         return vectorizer, texto_features
+
 
     
 
