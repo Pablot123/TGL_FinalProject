@@ -30,7 +30,7 @@ class DataPreprocess:
         #Aplicar stemming. Es una forma de enviar las palabras a una raiz común simplificando de esta manera el vocabulario. 
         #y de esta forma se evita tener dos palabras diferentes con el mismo significado en nuestro vocabulario.
         #Ademas de eliminar las palabras que tengan menos de dos letras
-        processed_feature = " ".join([stemmer.stem(i) for i in processed_feature.split() if len(i) >2])
+        processed_feature = " ".join([stemmer.stem(i) for i in processed_feature.split() if len(i) >=2])
         
 
         return processed_feature
